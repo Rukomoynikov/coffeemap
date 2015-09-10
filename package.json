@@ -1,0 +1,11 @@
+{
+  "name": "simple_sites_generator",
+  "version": "0.0.1",
+  "dependencies": {
+  	"gulp" : "*",
+  	"gulp-jade" : "*",
+  	"gulp-stylus" : "*",
+  	"gulp-less" : "*",
+  	"gulp-autoprefixer" : "*"
+  }
+}

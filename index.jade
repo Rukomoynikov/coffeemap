@@ -1,0 +1,37 @@
+doctype html
+html
+	head
+		link(href="./assets/css/main.css", rel='stylesheet')
+		link(rel="stylesheet" href="./assets/js/fancybox/jquery.fancybox.css" type="text/css" media="screen")
+		//- link(rel="./assets/css/normalize.css")
+	body
+		.navigation
+			.navigation__logo
+			.navigation__menu
+				a(href='./index.html').navigation__link Карта
+				a(href='./map.html').navigation__link Список
+				a(href='').navigation__link О проекте
+			.navigation__menu.navigation__menu--profile
+				a(href='').navigation__link Войти
+				a(href='').navigation__link Регистрация
+		block content
+			.map#map
+			.map__infoWindow
+				h1 Name
+				p Place Description
+		block sidebar
+			.filter
+				.filter__group
+					label.filter__label Город
+					input#city.filter__input(type='text', name='city')
+				form.filter__form
+					h1 ФИЛЬТР
+					.filter__group
+						label.filter__label Город
+						input#city.filter__input(type='text', name='city')
+					.filter__group
+						input.filter__input.filter__input--submit(type='submit', value='Отправить')
+		script(src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap", async)
+		script(src='./assets/js/jquery-1.11.3.min.js')
+		script(src='./assets/js/fancybox/jquery.fancybox.js')
+		script(src='./assets/js/mains.js')
