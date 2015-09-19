@@ -112,3 +112,126 @@ function autoComplete (){
 	  }
 	}
 }
+
+// Информация из старого
+Parse.initialize("8eYR1jiR5GCi722mW7fgXKmQJNsVPazc9KSBUeNX", "igooTpziLkymzIuKtVnnQzPtGROdJV6t8gj0jCgS");
+
+var Router = Backbone.Router.extend({
+	initialize : function(){
+
+	},
+	start : function(){
+		Backbone.history.start({pushState: true});
+	},
+	routes : {
+		"login" : "login",
+		"add" : "add",
+		"edit/:url" : "edit",
+		"/" : "list",
+		"detail:/:url" : "detail"
+	},
+	login : function(){
+		var loginView = new loginView();
+		console.log(loginView.el);
+	},
+	list : function(){
+		console.log("index");
+	}
+})
+
+roomRouter = new Router;
+roomRouter.start();
+
+var loginView = Backbone.View.extend({
+	initialize : function(){
+		this.render();
+	},
+	template: _.template("<h1>Войти</h1"),
+	render : function(){
+		// console.log(this.el);
+	}
+})
+
+
+    // var placeObject = Parse.Object.extend("Place");
+    // var place = new placeObject();
+    // place.set("name", "Кофейня на углу Пушкинской");
+    // place.set("description", "Такая неприметная кофейня");
+    // place.set('user', Parse.User.current());
+    // place.save({
+    //   success : function(){
+    //     alert("Yes")
+    //   },
+    //   error : function(error){
+    //     console.log(error)
+    //   }
+    // })
+
+function checkLogin (){
+	if(Parse.User.current()) {
+		console.log( Parse.User.current().get("username") );
+	} else {
+		console.log("There is no user");
+	}
+}
+
+// checkLogin();
+
+// var  logouOutButton = document.querySelector('#logouOutButton');
+// logouOutButton.addEventListener('click', logOutHandle);
+
+// var  signupForm = document.querySelector('#signUp');
+// signupForm.addEventListener('submit', handleSignUp);
+
+// var  signinForm = document.querySelector('#signIn');
+// signinForm.addEventListener('submit', handleSignIn);
+
+// function logOutHandle(event){
+// 	event.preventDefault();
+// 	Parse.User.logOut();
+// }
+
+// function handleSignUp(event){
+// 	event.preventDefault();
+// 	var name = document.getElementById("login").value;
+// 	var password = document.getElementById("password").value
+
+// 	var user = new Parse.User()
+// 	user.set("username", name);
+// 	user.set("password", password)
+// 	user.signUp(null, {
+// 		success : function(user){
+// 			console.log(user);
+// 		},
+// 		error: function(user, error){
+
+// 		}
+// 	})
+// }
+
+// function handleSignIn(event){
+// 	event.preventDefault();
+// 	var name = document.getElementById("loginIn").value;
+// 	var password = document.getElementById("passwordIn").value
+
+// 	Parse.User.logIn(name, password, {
+// 		success : function(user){
+// 			console.log("success");
+// 		},
+// 		error: function(error){
+// 			console.log(error);
+// 		}
+// 	});
+// }
+
+// function getPlaces (){
+// 	var query = new Parse.Query(placeObject);
+// 	query.find({
+// 		success : function(result){
+// 			console.log(result);
+// 		},
+// 		error : function(error){
+// 			console.log(error)
+// 		}
+// 	})
+// }
