@@ -42,7 +42,10 @@ function initMap(){
 	        lat: position.coords.latitude,
 	        lng: position.coords.longitude
 	      };
-	      map.setCenter(pos);
+		map = new google.maps.Map(map_dom, {
+			center: {pos},
+			zoom: 2
+		});
 	    }, function() {
 			// Создание карты
 			if (localStorage.getItem("lat") && localStorage.getItem("lng")) {
@@ -111,43 +114,43 @@ function autoComplete (){
 }
 
 // Информация из старого
-Parse.initialize("8eYR1jiR5GCi722mW7fgXKmQJNsVPazc9KSBUeNX", "igooTpziLkymzIuKtVnnQzPtGROdJV6t8gj0jCgS");
+// Parse.initialize("8eYR1jiR5GCi722mW7fgXKmQJNsVPazc9KSBUeNX", "igooTpziLkymzIuKtVnnQzPtGROdJV6t8gj0jCgS");
 
-var Router = Backbone.Router.extend({
-	initialize : function(){
+// var Router = Backbone.Router.extend({
+// 	initialize : function(){
 
-	},
-	start : function(){
-		Backbone.history.start({pushState: true});
-	},
-	routes : {
-		"login" : "login",
-		"add" : "add",
-		"edit/:url" : "edit",
-		"/" : "list",
-		"detail:/:url" : "detail"
-	},
-	login : function(){
-		var loginView = new loginView();
-		console.log(loginView.el);
-	},
-	list : function(){
-		console.log("index");
-	}
-})
+// 	},
+// 	start : function(){
+// 		Backbone.history.start({pushState: true});
+// 	},
+// 	routes : {
+// 		"login" : "login",
+// 		"add" : "add",
+// 		"edit/:url" : "edit",
+// 		"/" : "list",
+// 		"detail:/:url" : "detail"
+// 	},
+// 	login : function(){
+// 		var loginView = new loginView();
+// 		console.log(loginView.el);
+// 	},
+// 	list : function(){
+// 		console.log("index");
+// 	}
+// })
 
-roomRouter = new Router;
-roomRouter.start();
+// roomRouter = new Router;
+// roomRouter.start();
 
-var loginView = Backbone.View.extend({
-	initialize : function(){
-		this.render();
-	},
-	template: _.template("<h1>Войти</h1"),
-	render : function(){
-		// console.log(this.el);
-	}
-})
+// var loginView = Backbone.View.extend({
+// 	initialize : function(){
+// 		this.render();
+// 	},
+// 	template: _.template("<h1>Войти</h1"),
+// 	render : function(){
+// 		// console.log(this.el);
+// 	}
+// })
 
 
     // var placeObject = Parse.Object.extend("Place");
@@ -164,13 +167,13 @@ var loginView = Backbone.View.extend({
     //   }
     // })
 
-function checkLogin (){
-	if(Parse.User.current()) {
-		console.log( Parse.User.current().get("username") );
-	} else {
-		console.log("There is no user");
-	}
-}
+// function checkLogin (){
+// 	if(Parse.User.current()) {
+// 		console.log( Parse.User.current().get("username") );
+// 	} else {
+// 		console.log("There is no user");
+// 	}
+// }
 
 // checkLogin();
 
