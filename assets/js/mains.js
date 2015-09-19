@@ -42,9 +42,6 @@ function initMap(){
 	        lat: position.coords.latitude,
 	        lng: position.coords.longitude
 	      };
-
-	      infoWindow.setPosition(pos);
-	      infoWindow.setContent('Location found.');
 	      map.setCenter(pos);
 	    }, function() {
 			// Создание карты
