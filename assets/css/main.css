@@ -45,7 +45,6 @@ body {
 .map {
   width: calc(100% - 200px);
   height: 100%;
-  background: #000;
 }
 .map__infoWindow {
   display: none;
@@ -76,4 +75,36 @@ body {
 }
 .filter__input--submit {
   width: auto;
+}
+.loginForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  border: 1px solid #373737;
+  padding: 20px;
+}
+.loginForm__textInput {
+  display: block;
+  height: 2em;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  width: 10vw;
+}
+.loginForm__label {
+  display: block;
+  height: 2em;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.loginForm__submitButton {
+  border: 0px;
+  padding: 5px;
+}
+.loginForm__header {
+  position: absolute;
+  top: -22px;
+  background: #fff;
+  text-transform: uppercase;
 }

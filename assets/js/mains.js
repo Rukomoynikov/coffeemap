@@ -4,6 +4,7 @@ var countryRestrict = {'country': 'ru'};
 var map_infoWindow = $('.map__infoWindow'); // DOM элемент для информационных окон
 var autocomplete; // Сервис автокомплита
 
+
 // Начальные данные
 // var places = [
 // 	{
@@ -114,43 +115,7 @@ var autocomplete; // Сервис автокомплита
 // }
 
 // Информация из старого
-// Parse.initialize("8eYR1jiR5GCi722mW7fgXKmQJNsVPazc9KSBUeNX", "igooTpziLkymzIuKtVnnQzPtGROdJV6t8gj0jCgS");
 
-// var Router = Backbone.Router.extend({
-// 	initialize : function(){
-
-// 	},
-// 	start : function(){
-// 		Backbone.history.start({pushState: true});
-// 	},
-// 	routes : {
-// 		"login" : "login",
-// 		"add" : "add",
-// 		"edit/:url" : "edit",
-// 		"/" : "list",
-// 		"detail:/:url" : "detail"
-// 	},
-// 	login : function(){
-// 		var loginView = new loginView();
-// 		console.log(loginView.el);
-// 	},
-// 	list : function(){
-// 		console.log("index");
-// 	}
-// })
-
-// roomRouter = new Router;
-// roomRouter.start();
-
-// var loginView = Backbone.View.extend({
-// 	initialize : function(){
-// 		this.render();
-// 	},
-// 	template: _.template("<h1>Войти</h1"),
-// 	render : function(){
-// 		// console.log(this.el);
-// 	}
-// })
 
 
     // var placeObject = Parse.Object.extend("Place");

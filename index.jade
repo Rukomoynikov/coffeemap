@@ -5,37 +5,60 @@ html
 		link(rel="stylesheet" href="./assets/js/fancybox/jquery.fancybox.css" type="text/css" media="screen")
 		title Кофейные места
 		meta(charset='utf-8')
-		//- link(rel="./assets/css/normalize.css")
-	body
-		.navigation
-			.navigation__logo
-			.navigation__menu
-				a(href='./index.html').navigation__link Карта
-				a(href='./map.html').navigation__link Список
-				a(href='').navigation__link О проекте
-			.navigation__menu.navigation__menu--profile
-				a(href='').navigation__link Войти
-				a(href='').navigation__link Регистрация
-		block content
-			.map#map
-			.map__infoWindow
-				h1 Name
-				p Place Description
-		block sidebar
-			.filter
-				.filter__group
-					label.filter__label Город
-					input#city.filter__input(type='text', name='city')
-				form.filter__form
-					h1 ФИЛЬТР
+		script(type='template', id='baseNavigationTemplate')
+			.navigation
+				.navigation__logo
+				.navigation__menu
+					a(href='./index.html').navigation__link Карта
+					a(href='./map.html').navigation__link Список
+					a(href='').navigation__link О проекте
+				.navigation__menu.navigation__menu--profile
+					<% if (user == "undefined") { %>
+						a(href='/#login').navigation__link Войти
+						a(href='/#register').navigation__link Регистрация
+					<% } else { %>
+						a(href='/#login').navigation__link <%= user.username %>
+						a(href='/#register').navigation__link Профиль
+					<% } %>
+		script(type='template', id='baseSidebarTemplate')
+			.sidebar
+				.filter
 					.filter__group
 						label.filter__label Город
 						input#city.filter__input(type='text', name='city')
-					.filter__group
-						input.filter__input.filter__input--submit(type='submit', value='Отправить')
-		script(src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap", defer)
+					form.filter__form
+						h1 ФИЛЬТР
+						.filter__group
+							label.filter__label Город
+							input#city.filter__input(type='text', name='city')
+						.filter__group
+							input.filter__input.filter__input--submit(type='submit', value='Отправить')
+		script(type='template', id='baseTemplate')
+			.content
+				.map#map
+				.map__infoWindow
+					h1 Name
+					p Place Description
+		script(type='template', id='loginTemplate')
+			form(name='login', class='loginForm')
+				h2.loginForm__header Войти
+				label(for='emailLogin').loginForm__label Email
+				input(type='text', name='email', id='emailLogin').loginForm__textInput
+				label(for='passwordLogin').loginForm__label Пароль
+				input(type='password', name='password', id='passwordLogin').loginForm__textInput
+				input(type='submit', value='Регистрация').loginForm__submitButton
+		script(type='template', id='postTemplate')
+			h1 <%= name %>
+			p <%= description %>
+	body
+		script(src="http://www.parsecdn.com/js/parse-latest.js", defer)
+		script(src="https://maps.googleapis.com/maps/api/js?libraries=places", defer)
 		script(src='./assets/js/jquery-1.11.3.min.js', defer)
 		script(src='./assets/js/underscore-min.js', defer)
 		script(src='./assets/js/backbone-min.js', defer)
 		script(src='./assets/js/fancybox/jquery.fancybox.js', defer)
+
+		// Logic of app
+		script(src='./assets/js/backboneViews.js', defer)
+		script(src='./assets/js/backboneRoutes.js', defer)
 		script(src='./assets/js/mains.js', defer)
