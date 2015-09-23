@@ -6,20 +6,20 @@ html
 		title Кофейные места
 		meta(charset='utf-8')
 		script(type='template', id='baseNavigationTemplate')
-			.navigation
-				.navigation__logo
-				.navigation__menu
-					a(href='./index.html').navigation__link Карта
-					a(href='./map.html').navigation__link Список
-					a(href='').navigation__link О проекте
-				.navigation__menu.navigation__menu--profile
-					<% if (user == "undefined") { %>
-						a(href='/#login').navigation__link Войти
-						a(href='/#register').navigation__link Регистрация
-					<% } else { %>
-						a(href='/#login').navigation__link <%= user.username %>
-						a(href='/#register').navigation__link Профиль
-					<% } %>
+			.navigation__logo
+			.navigation__menu
+				a(href='./#').navigation__link Карта
+				a(href='./').navigation__link Список
+				a(href='').navigation__link О проекте
+			.navigation__menu.navigation__menu--profile
+				<% if (user == null) { %>
+				a(href='/#login').navigation__link Войти
+				a(href='/#register').navigation__link Регистрация
+				<% } else { %>
+				a(href='/#login').navigation__link <%= user.username %>
+				a(href='/#register').navigation__link Профиль
+				a(href='/#logout').navigation__link Выйти
+				<% } %>
 		script(type='template', id='baseSidebarTemplate')
 			.sidebar
 				.filter
@@ -34,11 +34,10 @@ html
 						.filter__group
 							input.filter__input.filter__input--submit(type='submit', value='Отправить')
 		script(type='template', id='baseTemplate')
-			.content
 				.map#map
-				.map__infoWindow
-					h1 Name
-					p Place Description
+				//- .map__infoWindow
+				//- 	h1 Name
+				//- 	p Place Description
 		script(type='template', id='loginTemplate')
 			form(name='login', class='loginForm')
 				h2.loginForm__header Войти
@@ -50,6 +49,17 @@ html
 		script(type='template', id='postTemplate')
 			h1 <%= name %>
 			p <%= description %>
+		script(type='template', id='addTemplate')
+			form(enctype='multipart/form-data')
+				input(type='text', name='placeName')
+				input(type='text', name='placeDescription')
+				input(type='file', name='placeDescription')
+				input(type="submit", value="Создать")
+		script(type='template', id='editTemplate')
+			input(type='text', name='placeName')
+			input(type='text', name='placeDescription')
+			input(type='file', name='placeDescription')
+			input(type="submit", value="Создать")
 	body
 		script(src="http://www.parsecdn.com/js/parse-latest.js", defer)
 		script(src="https://maps.googleapis.com/maps/api/js?libraries=places", defer)

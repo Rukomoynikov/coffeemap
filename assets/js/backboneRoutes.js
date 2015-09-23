@@ -13,6 +13,7 @@ var Router = Backbone.Router.extend({
 	},
 	routes : {
 		"login" : "login",
+		"logout" : "logout",
 		"add" : "add",
 		"edit/:url" : "edit",
 		"detail:/:url" : "detail",
@@ -22,11 +23,26 @@ var Router = Backbone.Router.extend({
 
 roomRouter = new Router;
 
+var baseNavigationViewInstance = new baseNavigationView();
+var baseViewInstance = new baseView();
+var requiredViews = [baseNavigationViewInstance, baseViewInstance];
+var loginViewInstance = new loginView();
+var addViewInstance = new addView()
+
+function checkRequiredViews (){
+	_.each(requiredViews, function(element){
+		if (element.rendered == false){
+			$('body').prepend(element.el);
+		}
+
+	})
+}
+
 // Главная страница
 roomRouter.on('route:main', function () {
-	var baseViewInstance = new baseView();
-	console.log(_.template($('#baseNavigationTemplate').html())());
-	$('body').prepend(_.template($('#baseNavigationTemplate'))());
+
+	$('body').prepend(baseViewInstance.el);
+	$('body').prepend(baseNavigationViewInstance.el);
 
 	var posts = new Parse.Query("Place");
 	posts.find().then(function(results){
@@ -38,36 +54,31 @@ roomRouter.on('route:main', function () {
 	});
 });
 
+roomRouter.on('route:add', function(){
+	checkRequiredViews();
+	$('body').prepend(addViewInstance.el);
+});
+
+roomRouter.on('route:logout', function(){
+	Parse.User.logOut().then(function(){
+		baseNavigationViewInstance.render();
+		roomRouter.navigate('/', { trigger: true })
+	})
+
+});
+
 roomRouter.on('route:login', function () {
 	if (Parse.User.current()){
 		roomRouter.navigate('/', {trigger: true})
 		var user = Parse.User.current().toJSON();
+	} else {
+		checkRequiredViews();
+		// Так как навигация и основной шаблон уже вставлены, необходимо вставить только окно логина
+		// но есть проблема, если пользователь открыл эту страницу первой, значит те части шаблона не подгрузились
+		$('body').prepend(loginViewInstance.el);
 	}
-
-	var baseViewInstance = new baseView();
-	$('body').prepend(baseViewInstance.el);
-
-	var loginViewInstance = new loginView();
-	$('body').prepend(loginViewInstance.el);
-
-
-	$('.loginForm').on('submit', function(event){
-		event.preventDefault();
-
-		var emailLogin = $('#emailLogin').val();
-		var passwordLogin = $('#passwordLogin').val();
-
-		var user = Parse.User.logIn(emailLogin, passwordLogin).then(function(result){
-			if (Parse.User.current()){
-				$('.navigation__menu--profile').html("<a href='#' class='navigation__link'>" + Parse.User.current().get("username") + "</a>" );
-			}
-		})
-
-	})
-
-	//console.log(Parse.User.current());
-
 
 });
 
 roomRouter.start();
+// module.exports  = roomRouter;
