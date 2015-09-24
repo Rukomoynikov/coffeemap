@@ -13,12 +13,13 @@ html
 				a(href='').navigation__link О проекте
 			.navigation__menu.navigation__menu--profile
 				<% if (user == null) { %>
-				a(href='/#login').navigation__link Войти
-				a(href='/#register').navigation__link Регистрация
+				a(href='#login').navigation__link Войти
+				a(href='#register').navigation__link Регистрация
 				<% } else { %>
-				a(href='/#login').navigation__link <%= user.username %>
-				a(href='/#register').navigation__link Профиль
-				a(href='/#logout').navigation__link Выйти
+				a(href='#login').navigation__link <%= user.username %>
+				a(href='#profile').navigation__link Профиль
+				a(href='#add').navigation__link Добавить
+				a(href='#logout').navigation__link Выйти
 				<% } %>
 		script(type='template', id='baseSidebarTemplate')
 			.sidebar
@@ -50,11 +51,14 @@ html
 			h1 <%= name %>
 			p <%= description %>
 		script(type='template', id='addTemplate')
-			form(enctype='multipart/form-data')
-				input(type='text', name='placeName')
-				input(type='text', name='placeDescription')
-				input(type='file', name='placeDescription')
-				input(type="submit", value="Создать")
+			input(type='hidden', value='objectId')
+			label Название
+			input(type='text', name='placeName')
+			label Описание
+			input(type='text', name='placeDescription')
+			label Фотография
+			input(type='file', name='placeDescription')
+			input(type="submit", value="Создать")
 		script(type='template', id='editTemplate')
 			input(type='text', name='placeName')
 			input(type='text', name='placeDescription')

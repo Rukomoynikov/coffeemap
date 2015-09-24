@@ -26,7 +26,7 @@ var baseNavigationView = Backbone.View.extend({
 	template : _.template($('#baseNavigationTemplate').html()),
 	render : function(){
 		user = Parse.User.current() ? Parse.User.current().toJSON() : null;
-		this.$el.append(this.template({user: user}));
+		this.$el.html(this.template({user: user}));
 	},
 	rendered : false
 })
@@ -51,9 +51,10 @@ var loginView = Backbone.View.extend({
 		var emailLogin = $('#emailLogin').val();
 		var passwordLogin = $('#passwordLogin').val();
 		var self = this;
-		var user = Parse.User.logIn(emailLogin, passwordLogin).then(function(result){
+		Parse.User.logIn(emailLogin, passwordLogin).then(function(result){
 			roomRouter.navigate('/#', { trigger: true })
-			this.render();
+			baseNavigationViewInstance.render();
+			self.remove();
 		})
 	},
 	rendered : false
@@ -97,12 +98,36 @@ var addView = Backbone.View.extend({
 		this.render();
 	},
 	tagName : 'form',
+	className : 'addPost',
 	attributes : {
-		"enctype" : "multipart/form-data"
+		// "enctype" : "multipart/form-data",
+		// "method" : "POST"
 	},
 	template: _.template($('#addTemplate').html()),
 	render: function(){
-		this.$el.append(this.template())
+		this.$el.html(this.template())
+	},
+	events : {
+		'submit .addPost' : "addPost",
+		'click [type="submit"]' : 'addPost'
+	},
+	addPost : function(event){
+		console.log("asgasg");
+		event.preventDefault();
+		var placeObject = Parse.Object.extend("Place");
+	    var place = new placeObject();
+	    place.set("name", $('[name="placeName"]').val());
+	    place.set("description", $('[name="placeDescription"]').val());
+	    place.set('user', Parse.User.current());
+	    place.save({
+	      success : function(){
+	        roomRouter.navigate('/#', { trigger: true })
+	      },
+	      error : function(error){
+	        console.log(error)
+	      }
+		});
+		this.remove();
 	},
 	rendered : false
 })

@@ -8,6 +8,7 @@ var Router = Backbone.Router.extend({
 	},
 	start : function(){
 		Backbone.history.start({
+			root : '/coffeemap'
 			//pushState: true,
 		});
 	},
@@ -56,11 +57,12 @@ roomRouter.on('route:main', function () {
 
 roomRouter.on('route:add', function(){
 	checkRequiredViews();
-	$('body').prepend(addViewInstance.el);
+	$('body').prepend(addViewInstance.$el);
 });
 
 roomRouter.on('route:logout', function(){
 	Parse.User.logOut().then(function(){
+		// baseNavigationViewInstance.remove();
 		baseNavigationViewInstance.render();
 		roomRouter.navigate('/', { trigger: true })
 	})
