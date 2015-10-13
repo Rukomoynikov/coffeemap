@@ -16,7 +16,7 @@ var Router = Backbone.Router.extend({
 		"login" : "login",
 		"logout" : "logout",
 		"add" : "add",
-		"edit/:url" : "edit",
+		"edit/:id" : "edit",
 		"detail:/:url" : "detail",
 		"*actions" : "main"
 	}
@@ -49,7 +49,6 @@ roomRouter.on('route:main', function () {
 	posts.find().then(function(results){
 		_.each(results, function(onePost){
 			var postViewInstance = new postView({model : onePost})
-
 			$('.map').append(postViewInstance.el)
 		})
 	});
@@ -81,6 +80,26 @@ roomRouter.on('route:login', function () {
 	}
 
 });
+
+roomRouter.on('route:edit', function(postId){
+	checkRequiredViews();
+	// Проверить принадлежность пользователю этого обьекта
+	var places = new Parse.Query('Place');
+	places.get(postId).then(function(post){
+		if (Parse.User.current() && post.get("user").id == Parse.User.current().id) {
+			var EditViewInstance = new editView({model: post})
+			$('body').prepend(EditViewInstance.$el);
+		} else {
+			roomRouter.navigate("/", {trigger: true})
+		}
+	})
+	// var posts = new Parse.Query("Place");
+
+	// baseViewInstance.remove();
+
+	// var EditViewInstance = new addView({model})
+	// $('body').prepend(EditViewInstance.$el);
+})
 
 roomRouter.start();
 // module.exports  = roomRouter;

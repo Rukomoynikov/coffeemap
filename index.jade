@@ -48,16 +48,25 @@ html
 				input(type='password', name='password', id='passwordLogin').loginForm__textInput
 				input(type='submit', value='Регистрация').loginForm__submitButton
 		script(type='template', id='postTemplate')
-			h1 <%= name %>
+			h1
+				a.detail(href='') <%= name %>
 			p <%= description %>
+			<% if (Parse.User.current() && Parse.User.current().id == user.objectId) {%>
+			.meta__panel
+				a.edit Редактировать
+			<% }%>
 		script(type='template', id='addTemplate')
-			input(type='hidden', value='objectId')
+			input(type='hidden', value='<%= objectId %>')
 			label Название
+			<% if (name) { %>
+			input(type='text', name='placeName', value="<%= name %>" )
+			<% } else  { %>
 			input(type='text', name='placeName')
+			<% } %>
 			label Описание
 			input(type='text', name='placeDescription')
 			label Фотография
-			input(type='file', name='placeDescription')
+			input(type='file', name='placeImages', multiple)
 			input(type="submit", value="Создать")
 		script(type='template', id='editTemplate')
 			input(type='text', name='placeName')
@@ -71,7 +80,6 @@ html
 		script(src='./assets/js/underscore-min.js', defer)
 		script(src='./assets/js/backbone-min.js', defer)
 		script(src='./assets/js/fancybox/jquery.fancybox.js', defer)
-
 		// Logic of app
 		script(src='./assets/js/backboneViews.js', defer)
 		script(src='./assets/js/backboneRoutes.js', defer)

@@ -79,7 +79,13 @@ var postView = Backbone.View.extend({
 	render : function () {
 		this.$el.append(this.template(this.model.toJSON()));
 	},
-	rendered : false
+	rendered : false,
+	events : {
+		'click .edit' : function(event){
+			event.preventDefault();
+			roomRouter.navigate('edit/' + this.model.id, {trigger: true})
+		}
+	}
 })
 
 var listView = Backbone.View.extend({
@@ -100,8 +106,8 @@ var addView = Backbone.View.extend({
 	tagName : 'form',
 	className : 'addPost',
 	attributes : {
-		// "enctype" : "multipart/form-data",
-		// "method" : "POST"
+		"enctype" : "multipart/form-data",
+		"method" : "POST"
 	},
 	template: _.template($('#addTemplate').html()),
 	render: function(){
@@ -112,7 +118,44 @@ var addView = Backbone.View.extend({
 		'click [type="submit"]' : 'addPost'
 	},
 	addPost : function(event){
-		console.log("asgasg");
+		event.preventDefault();
+		var placeObject = Parse.Object.extend("Place");
+	    var place = new placeObject();
+	    place.set("name", $('[name="placeName"]').val());
+	    place.set("description", $('[name="placeDescription"]').val());
+	    place.set('user', Parse.User.current());
+	    place.save({
+	      success : function(){
+	        roomRouter.navigate('/#', { trigger: true })
+	      },
+	      error : function(error){
+	        console.log(error)
+	      }
+		});
+		this.remove();
+	},
+	rendered : false
+})
+
+var editView = Backbone.View.extend({
+	initialize : function(){
+		this.render();
+	},
+	tagName : 'form',
+	className : 'editPost',
+	attributes : {
+		// "enctype" : "multipart/form-data",
+		// "method" : "POST"
+	},
+	template: _.template($('#addTemplate').html()),
+	render: function(){
+		this.$el.html(this.template(this.model.toJSON()))
+	},
+	events : {
+		'submit .addPost' : "addPost",
+		'click [type="submit"]' : 'addPost'
+	},
+	editPost : function(event){
 		event.preventDefault();
 		var placeObject = Parse.Object.extend("Place");
 	    var place = new placeObject();
