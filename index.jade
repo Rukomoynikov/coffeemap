@@ -47,6 +47,15 @@ html
 				label(for='passwordLogin').loginForm__label Пароль
 				input(type='password', name='password', id='passwordLogin').loginForm__textInput
 				input(type='submit', value='Регистрация').loginForm__submitButton
+		script(type='template', id='loginTemplate')
+			form(name='login', class='loginForm')
+				h2.loginForm__header Войти
+				label(for='emailLogin').loginForm__label Email
+				input(type='text', name='email', id='emailLogin').loginForm__textInput
+				label(for='passwordLogin').loginForm__label Пароль
+				input(type='password', name='password', id='passwordLogin').login
+				Form__textInput
+				input(type='submit', value='Регистрация').loginForm__submitButton
 		script(type='template', id='postTemplate')
 			h1
 				a.detail(href='') <%= name %>
